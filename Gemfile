@@ -34,6 +34,8 @@ gem 'cancancan'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-heroku'
+gem 'google-api-client', :require => 'google/api_client'
+gem 'chronic'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
