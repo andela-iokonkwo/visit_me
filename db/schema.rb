@@ -11,20 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107133122) do
+ActiveRecord::Schema.define(version: 20151107171909) do
 
-  create_table "schedules", force: :cascade do |t|
+  create_table "meetings", force: :cascade do |t|
     t.integer  "visitor_id"
-    t.time     "time"
-    t.integer  "duration"
+    t.time     "start_time"
+    t.time     "end_time"
     t.date     "date"
     t.text     "description"
     t.string   "venue"
-    t.string   "code"
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "user_id"
+    t.string   "title"
   end
+
+  add_index "meetings", ["user_id"], name: "index_meetings_on_user_id"
+  add_index "meetings", ["visitor_id"], name: "index_meetings_on_visitor_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -37,10 +40,13 @@ ActiveRecord::Schema.define(version: 20151107133122) do
   end
 
   create_table "visitors", force: :cascade do |t|
-    t.string   "email"
     t.string   "name"
+    t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
+
+  add_index "visitors", ["user_id"], name: "index_visitors_on_user_id"
 
 end
