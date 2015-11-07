@@ -1,45 +1,40 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
-  # GET /meetings
-  # GET /meetings.json
   def index
     @meetings = Meeting.all
   end
 
-  # GET /meetings/1
-  # GET /meetings/1.json
+
   def show
   end
 
-  # GET /meetings/new
   def new
     @meeting = Meeting.new
   end
 
-  # GET /meetings/1/edit
   def edit
   end
 
-  # POST /meetings
-  # POST /meetings.json
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.user = current_user
-
-    respond_to do |format|
       if @meeting.save
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
-        format.json { render :show, status: :created, location: @meeting }
+        session[:meeting_id] = @meeting.id
+        if session[:token]
+          create_google_event
+        else
+          redirect_to "/auth/google_oauth2"
+        end
       else
-        format.html { render :new }
-        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html { render :new }
+          format.json { render json: @meeting.errors, status: :unprocessable_entity }
+        end
       end
-    end
   end
 
-  # PATCH/PUT /meetings/1
-  # PATCH/PUT /meetings/1.json
+
   def update
     respond_to do |format|
       if @meeting.update(meeting_params)
@@ -52,8 +47,6 @@ class MeetingsController < ApplicationController
     end
   end
 
-  # DELETE /meetings/1
-  # DELETE /meetings/1.json
   def destroy
     @meeting.destroy
     respond_to do |format|
@@ -62,14 +55,54 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def create_google_event
+    @meeting = Meeting.find(session[:meeting_id])
+    client = Google::APIClient.new
+    client.authorization.access_token = session['token']
+    service = client.discovered_api('calendar', 'v3')
+    @set_event = set_event(service, client)
+    respond_to do |format|
+      format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
+      format.json { render :show, status: :created, location: @meeting }
+    end
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_meeting
       @meeting = Meeting.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:visitor_id, :start_time, :end_time, :date, :description, :venue)
+      params.require(:meeting).permit(:visitor_id, :start_time, :end_time, :date, :description, :venue, :title)
     end
+
+     def event
+    {
+      'summary' => @meeting.title,
+      'description' => @meeting.description,
+      'location' => @meeting.venue,
+      'start' => { 'dateTime' => parse_time(@meeting.start_time, @meeting.date)},
+      'end' => { 'dateTime' => parse_time(@meeting.end_time, @meeting.date)},
+      'attendees' => @meeting.visitor_email.map do | email |
+          { email: email }
+      end
+    }
+  end
+
+  def set_event(service, client)
+    client.execute(:api_method => service.events.insert,
+                            :parameters => {'calendarId' => session['email'], 'sendNotifications' => true},
+                            :body => JSON.dump(event),
+                            :headers => {'Content-Type' => 'application/json'})
+  end
+
+  def parse_time(meeting_time, meeting_date)
+    time = convert_time_to_i(meeting_time)
+    (meeting_date.to_time + time).to_datetime.rfc3339
+  end
+
+  def convert_time_to_i(meeting_time)
+    (meeting_time.hour * 3600) + (meeting_time.min * 60)
+  end
 end

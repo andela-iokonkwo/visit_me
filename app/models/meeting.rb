@@ -3,4 +3,9 @@ class Meeting < ActiveRecord::Base
 
   belongs_to :visitor
   belongs_to :user
+
+  def visitor_email
+    [ visitor.email ]
+  end
+
 end

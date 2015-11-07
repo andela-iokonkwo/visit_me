@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(version: 20151107171909) do
   add_index "meetings", ["user_id"], name: "index_meetings_on_user_id"
   add_index "meetings", ["visitor_id"], name: "index_meetings_on_visitor_id"
 
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "visitors", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
