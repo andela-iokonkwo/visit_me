@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :is_loggedin?
   def index
   end
 
