@@ -1,0 +1,9 @@
+<!-- Clean up this file and rout for landing page -->
+<p> Holla</p>
+<% if !flash.empty? %>
+<%= flash[:notice] %>
+<% end %>
+<%= link_to "Google", "/auth/google_oauth2" %>
+<%= link_to "Heroku", "/auth/heroku" %>
+<%= link_to "Github", "/auth/github" %>
+<%= link_to "Logout", logout_path %>
