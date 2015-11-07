@@ -1,44 +1,81 @@
-require 'chronic'
 class SessionsController < ApplicationController
   def index
   end
 
   def create
-    if env["omniauth.auth"]
-
-        session[:token] = env["omniauth.auth"]["credentials"]["token"]
-        session[:email] = env["omniauth.auth"]["info"]["email"]
-        create_event
-      flash[:notice] = "Provider oauth is working!"
+    set_sessions env["omniauth.auth"]
+    if env['omniauth.origin'].nil?
+      redirect_to root_path
     else
-      flash[:notice] = "Provider aint working yet. Yuck!"
+      redirect_to env['omniauth.origin']
     end
-    render :index
   end
 
-  def create_event
-    @event = {
-      'summary' => 'New Event Title',
-      'description' => 'The description',
-      'location' => 'Location',
-      'start' => { 'dateTime' => Chronic.parse('tomorrow 4 pm') },
-      'end' => { 'dateTime' => Chronic.parse('tomorrow 5pm') },
-      'attendees' => [ { "email" => 'olaide.ojewale@gmail.com' },
-      { "email" =>'chinedu.daniel@gmail.com' }, { "email" =>'osmond.oranagwa@gmail.com' } ] }
+  def event(meeting)
+    {
+      'summary' => meeting.title,
+      'description' => meeting.description,
+      'location' => meeting.location,
+      'start' => { 'dateTime' => parse_time(meeting.start_date)},
+      'end' => { 'dateTime' => parse_time(meeting.end_time)},
+      'attendees' => meeting.visitors_email.map do | email |
+          { email: email }
+      end
+    }
+  end
 
-      client = Google::APIClient.new
-      client.authorization.access_token = session[:token]
-      service = client.discovered_api('calendar', 'v3')
+  def set_event(service, event)
+    client.execute(:api_method => service.events.insert,
+                            :parameters => {'calendarId' => session['email'], 'sendNotifications' => true},
+                            :body => JSON.dump(event),
+                            :headers => {'Content-Type' => 'application/json'})
+  end
 
-      @set_event = client.execute(:api_method => service.events.insert,
-                              :parameters => {'calendarId' => session[:email], 'sendNotifications' => true},
-                              :body => JSON.dump(@event),
-                              :headers => {'Content-Type' => 'application/json'})
-      require "pry"; binding.pry
+  def create_google_event
+    meeting_info = get_schedule(user_id)
+    event = event(params)
+    client = Google::APIClient.new
+    client.authorization.access_token = session['token']
+    service = client.discovered_api('calendar', 'v3')
+    @set_event = set_event(service, event)
+  end
+
+  def parse_time(time) #:nodoc
+    time.to_datetime.rfc3339
   end
 
   def destroy
     session.clear
     redirect_to root_url
   end
+
+  private
+
+    def set_sessions(omni_auth)
+      if google_provider omni_auth
+        set_session_values_for_google_auth(omni_auth)
+      elsif omni_auth
+        user = User.first_or_create_from_omniauth env['omniauth.auth']
+        session[:user_id] = user.id
+      end
+    end
+
+    def google_provider(omni_auth)
+      omni_auth && omni_auth['provider'] == 'google_oauth2'
+    end
+
+    def set_session_values_for_google_auth(auth)
+      session['token'] = auth.credentials.token
+      session['email'] = auth.info.email
+      session['token_expires_at'] = auth.credentials.expires_at
+    end
+
+    # def get_schedule(user_id)
+    #   Meeting.includes(:visitor, :user).where(user.id => user_id)
+    # end
+
+    def visitors_email
+      visitors.pluck(:email)
+    end
+
 end

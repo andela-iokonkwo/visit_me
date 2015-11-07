@@ -13,12 +13,32 @@
 
 ActiveRecord::Schema.define(version: 20151107133122) do
 
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "visitor_id"
+    t.time     "time"
+    t.integer  "duration"
+    t.date     "date"
+    t.text     "description"
+    t.string   "venue"
+    t.string   "code"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "provider"
     t.string   "uid"
     t.string   "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "visitors", force: :cascade do |t|
+    t.string   "email"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

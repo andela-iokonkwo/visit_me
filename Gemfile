@@ -25,7 +25,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'materialize-sass'
 gem 'cancancan'
-
+gem 'google-api-client', :require => 'google/api_client'
+gem 'chronic'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -34,8 +35,6 @@ gem 'cancancan'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-heroku'
-gem 'google-api-client', :require => 'google/api_client'
-gem 'chronic'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
