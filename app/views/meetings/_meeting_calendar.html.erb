@@ -1,0 +1,9 @@
+<%= month_calendar events: meetings, previous_link: meetings_ajax_previous_link, next_link: meetings_ajax_next_link do |date, meets| %>
+  <%= date %>
+
+  <% meets.each do |meeting| %>
+    <div>
+      <%= meeting.name %>
+    </div>
+  <% end %>
+<% end %>

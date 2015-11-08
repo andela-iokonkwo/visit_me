@@ -27,8 +27,7 @@ gem 'materialize-sass'
 gem 'bourbon'
 gem 'cancancan'
 gem 'google-api-client', :require => 'google/api_client'
-gem 'chronic'
-
+gem "simple_calendar"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
