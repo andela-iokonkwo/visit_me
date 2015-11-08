@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107171909) do
+ActiveRecord::Schema.define(version: 20151107223330) do
 
   create_table "meetings", force: :cascade do |t|
     t.integer  "visitor_id"
@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(version: 20151107171909) do
     t.text     "description"
     t.string   "venue"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "title"
+    t.time     "checkin_time"
+    t.time     "checkout_time"
   end
 
   add_index "meetings", ["user_id"], name: "index_meetings_on_user_id"

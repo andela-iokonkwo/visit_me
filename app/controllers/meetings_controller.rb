@@ -1,5 +1,6 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  # load_and_authorize_resource
 
   def index
     @meetings = Meeting.all
@@ -19,21 +20,20 @@ class MeetingsController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.user = current_user
-      if @meeting.save
-        session[:meeting_id] = @meeting.id
-        if session[:token]
-          create_google_event
-        else
-          redirect_to "/auth/google_oauth2"
-        end
+    if @meeting.save
+      session[:meeting_id] = @meeting.id
+      if session[:token]
+        create_google_event
       else
-        respond_to do |format|
-          format.html { render :new }
-          format.json { render json: @meeting.errors, status: :unprocessable_entity }
-        end
+        redirect_to "/auth/google_oauth2"
       end
+    else
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @meeting.errors, status: :unprocessable_entity }
+      end
+    end
   end
-
 
   def update
     respond_to do |format|
