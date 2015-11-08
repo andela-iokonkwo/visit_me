@@ -1,0 +1,34 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #fff;
+  color: #666;
+  font-family: $lato;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $source-sans;
+  font-weight: 200;
+}
+
+h1 {
+  font-size: $xx-large;
+}
+
+h2 {
+  font-size: $x-large;
+}
+
+h3 {
+  font-size: $large;
+}
+
+.btn {
+  background-color: #8e62ba;
+}
