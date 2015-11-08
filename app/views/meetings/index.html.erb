@@ -1,5 +1,4 @@
 <p id="notice"><%= notice %></p>
-
 <h1>Listing Meetings</h1>
 
 <table>
@@ -19,7 +18,7 @@
   <tbody>
     <% @meetings.each do |meeting| %>
       <tr>
-        <td><%= meeting.visitor %></td>
+        <td><%= meeting.visitors %></td>
         <td><%= meeting.start_time %></td>
         <td><%= meeting.end_time %></td>
         <td><%= meeting.date %></td>
