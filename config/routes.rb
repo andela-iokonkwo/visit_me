@@ -15,18 +15,10 @@ Rails.application.routes.draw do
 
   get 'receptionists/edit'
 
-  get 'receptionist/index'
-
-  get 'receptionist/create'
-
-  get 'receptionist/update'
-
-  get 'receptionist/destroy'
-
-  get 'receptionist/show'
+  resources :sessions
 
   resources :meetings
-
+  post "/visitors", to: "visitors#create"
   get "meetings/google/event" => "meetings#create_google_event", as: "google_event"
 
   get "/auth/:provider/callback", to: "sessions#create"

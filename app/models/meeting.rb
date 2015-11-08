@@ -1,7 +1,8 @@
 class Meeting < ActiveRecord::Base
-  validates :end_time, :start_time, :date, :venue, presence: true
+  validates :end_time, :start_time, :date, :venue, :title, presence: true
 
-  belongs_to :visitor
+  has_many :visitors_meeting
+  has_many :visitors, through: :visitors_meeting
   belongs_to :user
 
   def visitor_email

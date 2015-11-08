@@ -28,6 +28,11 @@ gem 'bourbon'
 gem 'cancancan'
 gem 'google-api-client', :require => 'google/api_client'
 gem "simple_calendar"
+
+gem 'chronic'
+gem 'activerecord-import'
+gem 'select2-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -46,6 +51,7 @@ group :development, :test do
   gem 'figaro'
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'faker'
 end
 
 group :development do
@@ -62,4 +68,3 @@ group :production do
   gem 'rails_12factor', '0.0.2'
   gem 'puma'
 end
-
