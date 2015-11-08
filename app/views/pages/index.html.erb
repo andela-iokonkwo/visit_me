@@ -1,0 +1,64 @@
+<section class="intro">
+  <div class="wrapper center-align">
+    <h1>Easy, Intuitive Scheduling.</h1>
+    <p>
+      VisitMe is a scheduling app that makes it trivial to manage appointments 
+      with business associates, clients or personal friends.
+    </p>
+    <%= link_to raw("<i class='material-icons right'>lock_open</i>Get Started for Free"), "#", class: "btn waves-effect" %>
+    <%= image_tag "scrshot.png", alt: "Home Screen",  class: "z-depth-4" %>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 center-align wow fadeInUp" data-wow-duration="1s">
+        <h2>How it Works.</h2>
+      </div>
+
+      <div class="col s12 step">
+        <p class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+          Schedule an appointment with 
+          clients, colleagues, friends, etc...
+        </p>
+        <%= image_tag "http://lorempixel.com/400/180/sports", alt: "scheduling", class: "z-depth-4 wow fadeInLeft", data: { "wow-duration" => "1s", "wow-delay" => "1s" } %>
+      </div>
+
+      <div class="col s12 center-align step">
+        <p class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+          VisitMe sends your request to them and syncs the request 
+          with their calendar if accepted
+        </p>
+        <%= image_tag "http://lorempixel.com/400/180/abstract", alt: "scheduling", class: "z-depth-4 wow flipInX", data: { "wow-duration" => "1s", "wow-delay" => "1s" } %>
+      </div>
+
+      <div class="col s12 right-align step">
+        <p class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+          The meeting is scheduled and 
+          it can take place on the specified date.
+        </p>
+        <%= image_tag "http://lorempixel.com/400/180/people", alt: "scheduling", class: "z-depth-4 wow fadeInRight", data: { "wow-duration" => "1s", "wow-delay" => "1s" } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sign-up center-align">
+  <div class="container">
+    <div class="row">
+      <div class="col s6">
+        <h4>Get Started Now For Free</h4>
+      </div>
+      <div class="col s6">
+        <%= link_to raw("<i class='material-icons right'>person_add</i>Sign Up"), "#", class: "btn" %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <div class="container center-align">
+    <p>Made with <i class="material-icons">favorite</i> by the Ruby Tabernacle</p>
+  </div>
+</footer>

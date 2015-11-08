@@ -1,0 +1,20 @@
+// Web Font Urls
+
+$material-icons: "https://fonts.googleapis.com/icon?family=Material+Icons";
+$font-stack-url: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,300,600|Lato:200,400,700,900|Pacifico";
+
+@import url($material-icons);
+@import url($font-stack-url);
+
+// Typography
+
+$source-sans: "Source Sans Pro", "Helvetica", "Arial", sans-serif;
+$lato: "Lato", "Calibri", sans-serif;
+$pacifico: "Pacifico", $source-sans;
+
+$xx-large: modular-scale(5);
+$x-large: modular-scale(4);
+$large: modular-scale(3);
+$medium: modular-scale(2);
+$small: modular-scale(1);
+$default-size: em(16px);
