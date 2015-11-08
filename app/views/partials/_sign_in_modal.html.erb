@@ -1,0 +1,8 @@
+<section id="sign-in-modal" class="modal">
+  <div class="modal-content center-align">
+    <h3>Sign in to VisitMe</h3>
+    <%= link_to raw("<i class='fa fa-google'></i> Google"), "/auth/google_oauth2", class: "btn google-btn" %>
+    <%= link_to raw("<i class='fa fa-server'></i> Heroku"), "/auth/heroku", class: "btn heroku-btn" %>
+    <%= link_to raw("<i class='fa fa-github-alt'></i> Github"), "/auth/github", class: "btn github-btn" %>
+  </div>
+</section>

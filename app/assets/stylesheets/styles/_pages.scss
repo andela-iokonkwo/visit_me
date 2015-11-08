@@ -103,3 +103,48 @@ footer.page-footer {
     transform: translateY(12px);
   }
 }
+
+.modal {
+  .modal-content {
+    padding: em(60px);
+
+    h3 {
+      margin-bottom: em(25px);
+    }
+
+    .btn {
+      margin-right: em(10px);
+      margin-left: em(10px);
+      transition-duration: 0.6s;
+
+      &:hover {
+        transform: translateY(-8px);
+      }
+
+      .fa {
+        margin-right: em(10px);
+      }
+
+      &.google-btn {
+        background-color: #d0402f;
+        &:hover {
+          background-color: #d0402f;
+        }
+      }
+
+      &.github-btn {
+        background-color: #4078c0;
+        &:hover {
+          background-color: #4078c0;
+        }
+      }
+
+      &.heroku-btn {
+        background-color: #5b468d;
+        &:hover {
+          background-color: #5b468d;
+        }
+      }
+    }
+  }
+}

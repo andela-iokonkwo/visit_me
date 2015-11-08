@@ -5,5 +5,8 @@
 (() -> 
    wow = new WOW({offset: 100, mobile: false})
    wow.init()
-   console.log("Sayanora")
+)()
+
+(() ->
+  $(".modal-trigger").leanModal()
 )()
