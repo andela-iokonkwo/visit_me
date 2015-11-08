@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  skip_before_action :is_loggedin?
   def index
   end
 
@@ -23,14 +22,14 @@ class SessionsController < ApplicationController
 
   private
 
-    def google_provider(omni_auth)
-      omni_auth && omni_auth['provider'] == 'google_oauth2'
-    end
+  def google_provider(omni_auth)
+    omni_auth && omni_auth['provider'] == 'google_oauth2'
+  end
 
-    def set_session_values_for_google_auth(auth)
-      session['token'] = auth.credentials.token
-      session['email'] = auth.info.email
-      session['token_expires_at'] = auth.credentials.expires_at
-    end
+  def set_session_values_for_google_auth(auth)
+    session['token'] = auth.credentials.token
+    session['email'] = auth.info.email
+    session['token_expires_at'] = auth.credentials.expires_at
+  end
 
 end

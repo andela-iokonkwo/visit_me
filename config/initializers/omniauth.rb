@@ -3,7 +3,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, ENV["google_client_id"], ENV["google_secret"],
     {
       scope:"userinfo.email, calendar",
-      access_type: "offline"
+      access_type: "offline",
+      skip_jwt: true
     }
 
   provider :heroku, ENV['HEROKU_OAUTH_ID'], ENV['HEROKU_OAUTH_SECRET']
