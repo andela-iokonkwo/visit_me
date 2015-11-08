@@ -1,16 +1,17 @@
 class MeetingsController < ApplicationController
+  include VisitorManager
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   def index
     @meetings = Meeting.all
   end
 
-
   def show
   end
 
   def new
     @meeting = Meeting.new
+    @meeting.visitors_meeting.build
   end
 
   def edit
@@ -19,13 +20,13 @@ class MeetingsController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.user = current_user
-      if @meeting.save
-        session[:meeting_id] = @meeting.id
-        if session[:token]
-          create_google_event
-        else
-          redirect_to "/auth/google_oauth2"
-        end
+      if @meeting.save && save_visitor_meeting(visitor_params, @meeting.id)
+        # session[:meeting_id] = @meeting.id
+        # if session[:token]
+        #   create_google_event
+        # else
+        #   redirect_to "/auth/google_oauth2"
+        # end
       else
         respond_to do |format|
           format.html { render :new }
@@ -74,7 +75,11 @@ class MeetingsController < ApplicationController
     end
 
     def meeting_params
-      params.require(:meeting).permit(:visitor_id, :start_time, :end_time, :date, :description, :venue, :title)
+      params.require(:meeting).permit(:start_time, :end_time, :date, :description, :venue, :title)
+    end
+
+    def visitor_params
+      params.require(:visitors_meeting).permit(visitors_id: [])
     end
 
      def event

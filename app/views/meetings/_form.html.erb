@@ -25,11 +25,13 @@
     <%= f.text_field :venue %>
   </div>
   <div class="field">
-    <%= f.label :visitor_id %><br>
-    <%= f.text_field :visitor_id %>
-
+    <div id="my_visitors"><%= show_user_visitors %></div>
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+<a id="add_new_visitor" "#">Add New Visitor</a>
+<%= render "new_visitor_form" %>
