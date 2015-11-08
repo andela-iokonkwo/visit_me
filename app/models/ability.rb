@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  alias_action :create, :read, :update, :destroy, to: :crud
+  # alias_action :create, :read, :update, :destroy, to: :crud
 
   def initialize(user)
     user ||= User.new

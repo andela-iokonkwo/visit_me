@@ -1,17 +1,19 @@
 class SessionsController < ApplicationController
+  skip_before_action :is_loggedin?
   def index
   end
 
   def create
     omni_auth = env["omniauth.auth"]
+    user = User.first_or_create_from_omniauth env['omniauth.auth']
+    session[:user_id] = user.id
     if google_provider omni_auth
-        set_session_values_for_google_auth(omni_auth)
-        redirect_to google_event_path
-      elsif omni_auth
-        user = User.first_or_create_from_omniauth env['omniauth.auth']
-        session[:user_id] = user.id
-        redirect_to meetings_path
-      end
+      set_session_values_for_google_auth(omni_auth)
+      redirect_to meetings_path if !session[:meeting_id]
+      redirect_to google_event_path if session[:meeting_id]
+    elsif omni_auth
+      redirect_to meetings_path
+    end
   end
 
   def destroy
