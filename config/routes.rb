@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root "pages#index"
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
   get 'receptionists/show'
 
@@ -21,8 +24,6 @@ Rails.application.routes.draw do
   get 'receptionist/destroy'
 
   get 'receptionist/show'
-
-  root "sessions#index"
 
   resources :meetings
 

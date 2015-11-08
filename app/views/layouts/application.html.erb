@@ -2,13 +2,16 @@
 <html>
 <head>
   <title>VisitMe</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css", media: "screen" %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<%= render "partials/header" %>
 <%= yield %>
 
+<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" %>
+<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 </body>
 </html>
